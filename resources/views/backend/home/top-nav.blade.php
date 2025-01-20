@@ -17,7 +17,7 @@
             </li>
             <li class="nav-item dropdown">
                 <a class="nav-icon pe-md-0 dropdown-toggle" href="#" data-bs-toggle="dropdown">
-                    <img src="{{ (!empty($userInfo->photo)) ? url($userInfo->photo) : url('upload/no_image.jpg') }}" class="avatar img-fluid rounded" alt="Jassa">
+                    <img src="{{ url('asset/backend/img/avatars/avatar-6.png') }}" class="avatar img-fluid rounded" alt="{{$userInfo->name??''}}">
                 </a>
                 <div class="dropdown-menu dropdown-menu-end">
                     <form method="POST" action="{{ route('logout') }}">

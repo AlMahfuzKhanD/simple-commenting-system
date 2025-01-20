@@ -11,8 +11,9 @@ class LoginUserController extends Controller
         return view('login');
     } // end index
 
-    public function login(){
+    public function login(Request $request){
         try {
+            // input validation 
             $credentials = $request->validate([
                 'email' => ['required','email'],
                 'password' => ['required']
@@ -47,5 +48,17 @@ class LoginUserController extends Controller
                 );
             return redirect()->back()->with($notification);
         }
-    }
+    } // end of login
+
+    public function logout(Request $request){
+
+        Auth::logout();
+
+        $request->session()->invalidate();
+
+        $request->session()->regenerateToken();
+
+        return redirect('/');
+
+    } // end of logout
 }
