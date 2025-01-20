@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Blog Post - Read More</title>
+    <title>Blog - Post Details</title>
     <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
 </head>
@@ -33,36 +33,32 @@
 
     <!-- Blog Content -->
     <div class="container mt-5">
-        <div class="row">
-            <div class="col-lg-8">
-                <h1 class="mb-4">Blog Post Title</h1>
-                <img src="https://via.placeholder.com/750x300" class="img-fluid mb-4" alt="Post Thumbnail">
-                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus lacinia odio vitae vestibulum vestibulum. Cras venenatis euismod malesuada.</p>
-                <hr>
-                
-                <!-- Comments Section -->
-                <div id="comments" class="mt-5">
-                    <h3>Comments</h3>
-                    <!-- Add Comment -->
-                    <div class="mb-4">
-                        <h5>Add a Comment</h5>
-                        <textarea class="form-control mb-2" rows="3" placeholder="Write your comment..."></textarea>
-                        <button class="btn btn-primary">Post Comment</button>
-                    </div>
-                    <hr>
+        <h1>Post Title</h1>
+        <p class="text-muted">Category: Tech</p>
+        <img src="https://via.placeholder.com/750x300" class="img-fluid mb-4" alt="Post Image">
+        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus lacinia odio vitae vestibulum vestibulum. Cras venenatis euismod malesuada...</p>
 
-                    <!-- Display Comments -->
-                    <div class="comment">
-                        <p><strong>User1:</strong> This is a great post! Thank you for sharing.</p>
-                        <!-- Reply -->
-                        <textarea class="form-control mb-2" rows="2" placeholder="Reply to this comment..."></textarea>
-                        <button class="btn btn-secondary btn-sm">Reply</button>
-                        <hr>
-                        <!-- Nested Comment -->
-                        <div class="ms-4">
-                            <p><strong>User2:</strong> I completely agree with you!</p>
-                        </div>
-                    </div>
+        <hr>
+
+        <!-- Comments Section -->
+        <div class="mt-5">
+            <h3>Comments</h3>
+            <!-- Add a Comment -->
+            <div class="mb-4">
+                <textarea class="form-control mb-2" rows="3" placeholder="Write your comment..."></textarea>
+                <button class="btn btn-primary">Post Comment</button>
+            </div>
+
+            <!-- Comment List -->
+            <div class="mb-3">
+                <div class="mb-2">
+                    <strong>User1:</strong> This is a great post!
+                    <button class="btn btn-link btn-sm text-danger">Edit</button>
+                    <button class="btn btn-link btn-sm">Reply</button>
+                </div>
+                <div class="ms-4">
+                    <strong>User2:</strong> I completely agree!
+                    <button class="btn btn-link btn-sm text-danger">Edit</button>
                 </div>
             </div>
         </div>
