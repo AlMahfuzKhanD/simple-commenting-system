@@ -2,6 +2,8 @@
 
 namespace App\Models;
 
+use App\Models\Comment;
+use App\Models\Category;
 use Illuminate\Database\Eloquent\Model;
 
 class Post extends Model
@@ -12,4 +14,12 @@ class Post extends Model
         'description',
         'created_by',
     ];
+
+    public function category(){
+        return $this->belongsTo(Category::class);
+    }
+
+    public function comments(){
+        return $this->hasMany(Comment::class);
+    }
 }

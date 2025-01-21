@@ -49,6 +49,15 @@
             </li>
             <li class="sidebar-item">
                 <a href="#auth" data-bs-toggle="collapse" class="sidebar-link collapsed">
+                    <i class="align-middle" data-feather="align-center"></i> <span class="align-middle">Post</span>
+                </a>
+                <ul id="auth" class="sidebar-dropdown list-unstyled collapse " data-bs-parent="#sidebar">
+                    <li class="sidebar-item"><a class="sidebar-link" href="{{ route('posts')}}">All Post</a></li>
+                    <li class="sidebar-item"><a class="sidebar-link" href="{{ route('create.post')}}">Create Post</a></li>  
+                </ul>
+            </li>
+            <li class="sidebar-item">
+                <a href="#auth" data-bs-toggle="collapse" class="sidebar-link collapsed">
                     <i class="align-middle" data-feather="users"></i> <span class="align-middle">Auth</span>
                 </a>
                 <ul id="auth" class="sidebar-dropdown list-unstyled collapse " data-bs-parent="#sidebar">
@@ -57,15 +66,6 @@
                 </ul>
             </li>
 
-            <li class="sidebar-item">
-                <a href="#setting" data-bs-toggle="collapse" class="sidebar-link collapsed">
-                    <i class="align-middle" data-feather="settings"></i> <span class="align-middle">Settings</span>
-                </a>
-                <ul id="setting" class="sidebar-dropdown list-unstyled collapse " data-bs-parent="#sidebar">
-                    <li class="sidebar-item"><a class="sidebar-link" href="#">General Setting</a></li>
-                    <li class="sidebar-item"><a class="sidebar-link" href="#">Edit Input Field</a></li>  
-                </ul>
-            </li>
         </ul>
     </div>
 </nav>

@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Models\Reply;
 use Illuminate\Database\Eloquent\Model;
 
 class Comment extends Model
@@ -11,4 +12,8 @@ class Comment extends Model
         'comment',
         'created_by',
     ];
+
+    public function replies(){
+        return $this->hasMany(Reply::class);
+    }
 }

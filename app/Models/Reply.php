@@ -11,4 +11,5 @@ class Reply extends Model
         'reply',
         'created_by',
     ];
+
 }

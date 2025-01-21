@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('posts', function (Blueprint $table) {
             $table->id();
-            $table->unsignedInteger('category_id');
+            $table->foreignId('category_id')->constrained()->onDelete('restrict'); // it will ensure category will not be deleted if there are any posts
             $table->string('title');
             $table->text('description');
             $table->unsignedInteger('created_by');

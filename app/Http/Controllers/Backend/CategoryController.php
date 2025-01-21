@@ -91,4 +91,28 @@ class CategoryController extends Controller
             return redirect()->back()->with($notification);
         }
     } // end of update
+
+    public function delete($id){
+        DB::beginTransaction();
+        try {
+            $category = Category::findOrFail($id);
+            $category->delete();            
+            $notification = array(
+                'message' => 'Category deleted successfully!!',
+                'alert-type' => 'error'
+            );
+
+            DB::commit();
+            return redirect()->route('categories')->with($notification);
+        } catch (\Exception $e) {
+
+            DB::rollback();
+                $message = $e->getMessage();
+                $notification = array(
+                    'message' => $message,
+                    'alert-type' => 'error'
+                );
+            return redirect()->back()->with($notification);
+        }
+    } // end of delete
 }

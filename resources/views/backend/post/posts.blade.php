@@ -28,10 +28,12 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                @foreach ($categories as $key => $item)
+                                @foreach ($posts as $key => $item)
                                 <tr>
                                     <td>{{ $key+1}}</td>
-                                    <td>{{ $item->category_name??''}}</td>
+                                    <td>{{ $item->title??''}}</td>
+                                    <td>{{ $item->category}}</td>
+                                    <td>{{ $item->description??''}}</td>
                                     <td>
                                         <a href="{{ route('edit.category',$item->id) }}" class="btn btn-pill btn-info" data-bs-toggle="tooltip" data-bs-placement="bottom" title="" data-bs-original-title="Edit"> <i data-feather="edit"></i></a>
                                         <a href="{{ route('delete.category',$item->id) }}" class="btn btn-pill btn-danger" data-bs-toggle="tooltip" data-bs-placement="bottom" title="" data-bs-original-title="Delete"> <i data-feather="trash-2"></i></a>
