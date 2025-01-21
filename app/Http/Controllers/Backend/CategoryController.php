@@ -22,7 +22,6 @@ class CategoryController extends Controller
 
     public function store(Request $request){
 
-        // dd($request->all());
         DB::beginTransaction();
         try {
             $validated = $request->validate([
@@ -53,4 +52,43 @@ class CategoryController extends Controller
             return redirect()->back()->with($notification);
         }
     } // end of store
+
+    public function edit($id){
+        $category = Category::where('id',$id)->first();
+        return view('backend.category.edit',compact('category'));
+    } //  end of edit
+
+    public function update(Request $request){
+        $category_id = $request->category_id;
+
+        DB::beginTransaction();
+        try {
+            $validated = $request->validate([
+                'category_name' => ['required','string']
+            ]);            
+
+            Category::where('id',$category_id)
+            ->update([
+                'category_name' => $request->category_name,
+            ]);
+            
+
+            $notification = array(
+                'message' => 'Category Updated Successfully!!',
+                'alert-type' => 'success'
+            );
+
+            DB::commit();
+            return redirect()->route('categories')->with($notification);
+        } catch (\Exception $e) {
+
+            DB::rollback();
+                $message = $e->getMessage();
+                $notification = array(
+                    'message' => $message,
+                    'alert-type' => 'error'
+                );
+            return redirect()->back()->with($notification);
+        }
+    } // end of update
 }
