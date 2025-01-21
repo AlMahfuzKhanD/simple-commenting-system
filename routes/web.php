@@ -8,7 +8,7 @@ use App\Http\Controllers\Backend\IndexController;
 use App\Http\Controllers\Backend\CategoryController;
 
 Route::get('/', function () {
-    return view('frontend.welcome');
+    return view('frontend.home');
 });
 Route::get('/read', function () {
     return view('read-more');
