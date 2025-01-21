@@ -4,9 +4,10 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\LoginUserController;
 use App\Http\Controllers\RegisterUserController;
 use App\Http\Controllers\Backend\IndexController;
+use App\Http\Controllers\Backend\CategoryController;
 
 Route::get('/', function () {
-    return view('welcome');
+    return view('frontend.welcome');
 });
 Route::get('/read', function () {
     return view('read-more');
@@ -23,4 +24,10 @@ Route::post('/logout',[LoginUserController::class,'logout'])->name('logout');
 // Dashboard Route
 Route::middleware(['auth'])->group(function () {
     Route::get('/dashboard',[IndexController::class,'index'])->name('dashboard');
+});
+
+// Category Route
+Route::middleware(['auth'])->group(function () {
+    Route::get('/categories',[CategoryController::class,'index'])->name('categories');
+    Route::get('/create/category',[CategoryController::class,'create'])->name('create.category');
 });

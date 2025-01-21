@@ -5,7 +5,7 @@
     <div class="sidebar-content js-simplebar">
         <a class="sidebar-brand" href="{{route('dashboard')}}">
             <span class="sidebar-brand-text align-middle">
-                Agri Stock
+                Commenting System
             </span>
         </a>
 
@@ -40,11 +40,11 @@
             </li>
             <li class="sidebar-item">
                 <a href="#review" data-bs-toggle="collapse" class="sidebar-link collapsed">
-                    <i class="align-middle" data-feather="trello"></i> <span class="align-middle">Customer Review</span>
+                    <i class="align-middle" data-feather="grid"></i> <span class="align-middle">Categories</span>
                 </a>
                 <ul id="review" class="sidebar-dropdown list-unstyled collapse " data-bs-parent="#sidebar">
-                    <li class="sidebar-item"><a class="sidebar-link" href="#">All Review</a></li>
-                    <li class="sidebar-item"><a class="sidebar-link" href="#">Create Review</a></li>
+                    <li class="sidebar-item"><a class="sidebar-link" href="{{route('categories')}}">Categories</a></li>
+                    <li class="sidebar-item"><a class="sidebar-link" href="#">Create Category</a></li>
                 </ul>
             </li>
             <li class="sidebar-item">
