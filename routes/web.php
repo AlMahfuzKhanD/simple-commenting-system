@@ -5,14 +5,12 @@ use App\Http\Controllers\LoginUserController;
 use App\Http\Controllers\Backend\PostController;
 use App\Http\Controllers\RegisterUserController;
 use App\Http\Controllers\Backend\IndexController;
+use App\Http\Controllers\HomeController;
 use App\Http\Controllers\Backend\CategoryController;
 
-Route::get('/', function () {
-    return view('frontend.home');
-});
-Route::get('/read', function () {
-    return view('read-more');
-});
+//frontend route
+Route::get('/',[HomeController::class,'index']);
+Route::get('/post/detail/{id}',[HomeController::class,'postDetail'])->name('post.detail');
 
 //Register User Rout
 Route::get('/register',[RegisterUserController::class,'index'])->name('register');
