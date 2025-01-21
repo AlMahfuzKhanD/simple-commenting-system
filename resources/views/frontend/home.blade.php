@@ -7,7 +7,7 @@
         <div class="col-md-8">
             <h1 class="mb-4">Blog Posts</h1>
 
-            @foreach ($posts as $post)
+            @foreach ($data['posts'] as $post)
             <!-- Blog Post Cards -->
             <div class="card mb-4">
                 {{-- <img src="https://via.placeholder.com/750x300" class="card-img-top" alt="Post Image"> --}}
@@ -25,7 +25,7 @@
 
             <!-- Pagination Links -->
             <div class="d-flex justify-content-center mt-4">
-                {{ $posts->links() }}
+                {{ $data['posts']->links() }}
             </div>
 
             

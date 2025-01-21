@@ -10,9 +10,9 @@ class HomeController extends Controller
 {
     public function index(){
         $data['categories'] = Category::withCount('posts')->get();
-        $posts = Post::paginate(5);
+        $data['posts'] = Post::paginate(5);
         // dd($posts);
-        return view('frontend.home',compact('data','posts'));
+        return view('frontend.home',compact('data'));
     } // end of index
 
     public function postDetail($id){
