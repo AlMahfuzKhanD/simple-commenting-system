@@ -30,4 +30,5 @@ Route::middleware(['auth'])->group(function () {
 Route::middleware(['auth'])->group(function () {
     Route::get('/categories',[CategoryController::class,'index'])->name('categories');
     Route::get('/create/category',[CategoryController::class,'create'])->name('create.category');
+    Route::post('/store/category',[CategoryController::class,'store'])->name('store.category');
 });

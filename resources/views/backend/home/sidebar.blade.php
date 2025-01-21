@@ -44,7 +44,7 @@
                 </a>
                 <ul id="review" class="sidebar-dropdown list-unstyled collapse " data-bs-parent="#sidebar">
                     <li class="sidebar-item"><a class="sidebar-link" href="{{route('categories')}}">Categories</a></li>
-                    <li class="sidebar-item"><a class="sidebar-link" href="#">Create Category</a></li>
+                    <li class="sidebar-item"><a class="sidebar-link" href="{{route('create.category')}}">Create Category</a></li>
                 </ul>
             </li>
             <li class="sidebar-item">

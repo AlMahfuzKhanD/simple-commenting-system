@@ -8,7 +8,6 @@ use Illuminate\Http\Request;
 class IndexController extends Controller
 {
     public function index(){
-
         return view('backend.dashboard');
-    } // end of emailReport
+    } // end of index
 }
