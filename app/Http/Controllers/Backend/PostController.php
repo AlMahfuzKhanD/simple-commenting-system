@@ -7,6 +7,7 @@ use Carbon\Carbon;
 use App\Models\Post;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Auth;
 
 class PostController extends Controller
 {
@@ -16,11 +17,11 @@ class PostController extends Controller
     } // end of index
 
     public function create(){
-        return view('backend.post.create');
+        $categories = category_by_id();
+        return view('backend.post.create',compact('categories'));
     } // end of create
 
     public function store(Request $request){
-
         DB::beginTransaction();
         try {
             $validated = $request->validate([
@@ -57,7 +58,8 @@ class PostController extends Controller
 
     public function edit($id){
         $post = Post::where('id',$id)->first();
-        return view('backend.post.edit',compact('post'));
+        $categories = category_by_id();
+        return view('backend.post.edit',compact('post','categories'));
     } //  end of edit
 
     public function update(Request $request){

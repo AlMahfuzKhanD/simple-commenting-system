@@ -5,11 +5,11 @@
 
         <div class="row mb-2 mb-xl-3">
             <div class="col-auto d-none d-sm-block">
-                <h3><strong>All</strong> Category</h3>
+                <h3><strong>All</strong> Post</h3>
             </div>
             
             <div class="col-auto ms-auto text-end mt-n1">
-                <a href="{{ route('create.category') }}" class="btn btn-primary">Create New Category</a>
+                <a href="{{ route('create.category') }}" class="btn btn-primary">Create New Post</a>
             </div> 
            
             
@@ -23,7 +23,9 @@
                             <thead>
                                 <tr>
                                     <th>Sl</th>
-                                    <th>Category Name</th>
+                                    <th>Title</th>
+                                    <th>Category</th>
+                                    <th>Description</th>
                                     <th>Action</th>
                                 </tr>
                             </thead>
@@ -32,11 +34,11 @@
                                 <tr>
                                     <td>{{ $key+1}}</td>
                                     <td>{{ $item->title??''}}</td>
-                                    <td>{{ $item->category}}</td>
-                                    <td>{{ $item->description??''}}</td>
+                                    <td>{{ $item->category->category_name}}</td>
+                                    <td>{{ $item->description?substr($item->description,0,40).'...':''}}</td>
                                     <td>
-                                        <a href="{{ route('edit.category',$item->id) }}" class="btn btn-pill btn-info" data-bs-toggle="tooltip" data-bs-placement="bottom" title="" data-bs-original-title="Edit"> <i data-feather="edit"></i></a>
-                                        <a href="{{ route('delete.category',$item->id) }}" class="btn btn-pill btn-danger" data-bs-toggle="tooltip" data-bs-placement="bottom" title="" data-bs-original-title="Delete"> <i data-feather="trash-2"></i></a>
+                                        <a href="{{ route('edit.post',$item->id) }}" class="btn btn-pill btn-info" data-bs-toggle="tooltip" data-bs-placement="bottom" title="" data-bs-original-title="Edit"> <i data-feather="edit"></i></a>
+                                        <a href="{{ route('delete.post',$item->id) }}" class="btn btn-pill btn-danger" data-bs-toggle="tooltip" data-bs-placement="bottom" title="" data-bs-original-title="Delete"> <i data-feather="trash-2"></i></a>
                                     </td>
                                 </tr>
                                 @endforeach
