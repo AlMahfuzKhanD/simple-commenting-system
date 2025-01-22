@@ -2,11 +2,12 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\HomeController;
-use App\Http\Controllers\CommentController;
 use App\Http\Controllers\LoginUserController;
 use App\Http\Controllers\Backend\PostController;
 use App\Http\Controllers\RegisterUserController;
 use App\Http\Controllers\Backend\IndexController;
+use App\Http\Controllers\Backend\ReplyController;
+use App\Http\Controllers\Backend\CommentController;
 use App\Http\Controllers\Backend\CategoryController;
 
 
@@ -25,6 +26,12 @@ Route::get('/post/detail/{id}',[HomeController::class,'postDetail'])->name('post
 // Comment Route
 Route::middleware(['auth'])->group(function () {
     Route::post('/store/comment',[CommentController::class,'store'])->name('store.comment');
+    Route::post('/update/comment',[CommentController::class,'update'])->name('update.comment');
+});
+
+// Reply Route
+Route::middleware(['auth'])->group(function () {
+    Route::post('/store/reply',[ReplyController::class,'store'])->name('store.reply');
 });
 
 // Dashboard Route

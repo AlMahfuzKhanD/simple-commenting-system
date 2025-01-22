@@ -31,21 +31,31 @@
             <div class="mb-2">
                 <strong>{{ $comment->user->name }}:</strong> {{ $comment->comment??''}}                
                 @if (auth()->check() && auth()->id() == $comment->user_id)
-                <button class="btn btn-link btn-sm comment-edit-btn" data-edited-comment="{{$comment->comment}}" data-comment-edit-id="comment-edit-form-{{ $comment->id }}">Edit</button>
+                <button class="btn btn-link btn-sm comment-edit-btn" data-edited-comment="{{$comment->comment}}" data-comment-edit-id="comment-edit-form-{{ $comment->id }}" data-comment-edit-text="comment-edit-text-{{ $comment->id }}" data-comment-update="update-comment-{{ $comment->id }}">Edit</button>
                 <button class="btn btn-link btn-sm  text-danger">delete</button>
                 @endif
                 <button class="btn btn-link btn-sm reply-btn" data-comment-id="reply-form-{{ $comment->id }}">Reply</button>
                 
             </div>
+            {{-- <!-- Update Comment Field -->
+            <form id="update-comment-{{ $comment->id }}">
+                @csrf
+                <input type="hidden" name="comment_id" value="{{ $comment->id}}">
+                <div class="comment-edit-form mt-2 d-none" id="comment-edit-form-{{ $comment->id }}">                            
+                <textarea class="form-control mb-2" rows="2" id="comment-edit-text-{{ $comment->id }}" name="update_comment"></textarea>
+                <button class="btn btn-secondary btn-sm">Update</button>
+                </div>
+            </form> --}}
+            
             <!-- Update Comment Field -->
             <div class="comment-edit-form mt-2 d-none" id="comment-edit-form-{{ $comment->id }}">
-                <form action="#">
+                <form class="update-comment-form">
                     @csrf
-
-                    <textarea class="form-control mb-2" rows="2" id="comment-edit-text"></textarea>
-                    <button class="btn btn-secondary btn-sm">Update</button>
+                    <input type="hidden" name="comment_id" value="{{ $comment->id }}">
+                    <textarea class="form-control mb-2 comment-edit-text" rows="2" name="comment">{{ $comment->comment }}</textarea>
+                    <button type="submit" class="btn btn-secondary btn-sm">Update</button>
+                    <button type="button" class="btn btn-light btn-sm cancel-edit">Cancel</button>
                 </form>
-                
             </div>
 
             <!-- Replies -->
@@ -60,18 +70,27 @@
                             @endif
                             <button class="btn btn-link btn-sm reply-btn" data-comment-id="reply-form-{{ $reply->id }}">Reply</button>
                         </div>
+                        <div class="reply-form mt-2 d-none" id="reply-form-{{ $reply->id }}">
+                            <form class="add-reply-form">
+                                @csrf
+                                <input type="hidden" name="comment_id" value="{{ $comment->id }}">
+                                <textarea class="form-control mb-2" rows="2" placeholder="Write your reply..." name="reply"></textarea>
+                                <button type="submit" class="btn btn-secondary btn-sm">Reply</button>
+                                <button type="button" class="btn btn-light btn-sm cancel-reply">Cancel</button>
+                            </form>
+                        </div>
                     @endforeach
-
-                    <!-- Reply Input Field -->
-                    <div class="reply-form mt-2 d-none" id="reply-form-{{ $reply->id }}">
-                        <textarea class="form-control mb-2" rows="2" placeholder="Write your reply..."></textarea>
-                        <button class="btn btn-secondary btn-sm">Post Reply</button>
-                    </div>
+                    
                 </div>
             @else
             <div class="ms-4 reply-form mt-2 d-none" id="reply-form-{{ $comment->id }}">
-                <textarea class="form-control mb-2" rows="2" placeholder="Write your reply..."></textarea>
-                <button class="btn btn-secondary btn-sm">Post Reply</button>
+                <form class="add-reply-form">
+                    @csrf
+                    <input type="hidden" name="comment_id" value="{{ $comment->id }}">
+                    <textarea class="form-control mb-2" rows="2" placeholder="Write your reply..." name="reply"></textarea>
+                    <button type="submit" class="btn btn-secondary btn-sm">Reply</button>
+                    <button type="button" class="btn btn-light btn-sm cancel-reply">Cancel</button>
+                </form>
             </div>
             @endif            
         </div>
@@ -81,62 +100,147 @@
 </div>
 <script>
     $(document).ready(function () {
-        // Comment Edit form
-        $('.comment-edit-btn').on('click', function () {
-            // Get the ID of the associated comment form
-            const commentEditId = $(this).data('comment-edit-id');
-            const editedComment = $(this).data('edited-comment');
-            const commentEditForm = $('#' + commentEditId);
-            $('#comment-edit-text').val(comment)
-            // Toggle visibility of the comment edit form
-            commentEditForm.toggleClass('d-none');
+        $("#add-comment").submit(function(e){
+            e.preventDefault();
+            $.ajax({
+                type: "POST",
+                dataType: "json",
+                url: "{{ route('store.comment') }}",
+                data: $(this).serialize(),
+                success: function(data){
+                    $("#add-comment")[0].reset(); // Reset the form
+                    // Start Message 
+                const Toast = Swal.mixin({
+                        toast: true,
+                        position: 'top-end',
+                        icon: 'success', 
+                        showConfirmButton: false,
+                        timer: 5000 
+                })
+                if ($.isEmptyObject(data.error)) {
+                        
+                        Toast.fire({
+                        type: 'success',
+                        title: data.success, 
+                        })
+                }else{
+                    
+                Toast.fire({
+                        type: 'error',
+                        title: data.error, 
+                        })
+                    }
+                    location.reload()
+                    // End Message   
+                }
+            });
         });
+
+
+        $('.comment-edit-btn').on('click', function () {
+        const commentEditId = $(this).data('comment-edit-id');
+            $('#' + commentEditId).removeClass('d-none');
+        });
+
+        // Cancel edit form
+        $('.cancel-edit').on('click', function () {
+            $(this).closest('.comment-edit-form').addClass('d-none');
+        });
+
+
+        // update comment
+        $('.update-comment-form').on('submit', function (e) {
+            e.preventDefault();
+
+            const form = $(this);
+
+            $.ajax({
+                type: "POST",
+                url: "{{ route('update.comment') }}",
+                data: form.serialize(),
+                success: function (data) {
+                    form.closest('.comment-edit-form').addClass('d-none');
+
+                    const Toast = Swal.mixin({
+                        toast: true,
+                        position: 'top-end',
+                        icon: 'success', 
+                        showConfirmButton: false,
+                        timer: 5000 
+                })
+                if ($.isEmptyObject(data.error)) {
+                        
+                        Toast.fire({
+                        type: 'success',
+                        title: data.success, 
+                        })
+                }else{
+                    
+                Toast.fire({
+                        type: 'error',
+                        title: data.error, 
+                        })
+                    }
+                    location.reload()
+
+                },
+            });
+        });
+
         // Reply Form
         $('.reply-btn').on('click', function () {
             // Get the ID of the associated reply form
             const commentId = $(this).data('comment-id');
-            const replyForm = $('#' + commentId);
+            $('#' + commentId).removeClass('d-none');
 
-            // Toggle visibility of the reply form
-            replyForm.toggleClass('d-none');
         });
-    });
 
-    $("#add-comment").submit(function(e){
-        e.preventDefault();
-        $.ajax({
-            type: "POST",
-            dataType: "json",
-            url: "{{ route('store.comment') }}",
-            data: $(this).serialize(),
-            success: function(data){
-                $("#add-comment")[0].reset(); // Reset the form
-                // Start Message 
-            const Toast = Swal.mixin({
-                    toast: true,
-                    position: 'top-end',
-                    icon: 'success', 
-                    showConfirmButton: false,
-                    timer: 5000 
-            })
-            if ($.isEmptyObject(data.error)) {
+        // Cancel reply
+        $('.cancel-reply').on('click', function () {
+            $(this).closest('.reply-form').addClass('d-none');
+        });
+
+        // add reply
+        $('.add-reply-form').on('submit', function (e) {
+            e.preventDefault();
+
+            const form = $(this);
+
+            $.ajax({
+                type: "POST",
+                url: "{{ route('store.reply') }}",
+                data: form.serialize(),
+                success: function (data) {
+                    form.closest('.reply-form').addClass('d-none');
+
+                    const Toast = Swal.mixin({
+                        toast: true,
+                        position: 'top-end',
+                        icon: 'success', 
+                        showConfirmButton: false,
+                        timer: 5000 
+                })
+                if ($.isEmptyObject(data.error)) {
+                        
+                        Toast.fire({
+                        type: 'success',
+                        title: data.success, 
+                        })
+                }else{
                     
-                    Toast.fire({
-                    type: 'success',
-                    title: data.success, 
-                    })
-            }else{
-                
-            Toast.fire({
-                    type: 'error',
-                    title: data.error, 
-                    })
-                }
-                location.reload()
-                // End Message   
-            }
+                Toast.fire({
+                        type: 'error',
+                        title: data.error, 
+                        })
+                    }
+                    location.reload()
+
+                },
+            });
         });
     });
+
+    
 </script>
 @endsection
 
