@@ -61,7 +61,6 @@ class CommentController extends Controller
                 'data' => $comment
             ]);
         } catch (\Exception $e) {
-            dd($e->getMessage());
             DB::rollback();
                 $message = $e->getMessage();
                 $notification = array(
