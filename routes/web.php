@@ -32,6 +32,7 @@ Route::get('/post/detail/{id}',[HomeController::class,'postDetail'])->name('post
 Route::middleware(['auth'])->group(function () {
     Route::post('/store/comment',[CommentController::class,'store'])->name('store.comment');
     Route::post('/update/comment',[CommentController::class,'update'])->name('update.comment');
+    Route::get('/delete/comment/{id}',[CommentController::class,'delete']);
 });
 
 // Reply Route

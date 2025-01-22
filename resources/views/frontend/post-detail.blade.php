@@ -38,8 +38,8 @@
             <div class="mb-2">
                 <strong>{{ $comment->user->name }}:</strong> {{ $comment->comment??''}}                
                 @if (auth()->check() && auth()->id() == $comment->user_id)
-                <button class="btn btn-link btn-sm comment-edit-btn" data-edited-comment="{{$comment->comment}}" data-comment-edit-id="comment-edit-form-{{ $comment->id }}" data-comment-edit-text="comment-edit-text-{{ $comment->id }}" data-comment-update="update-comment-{{ $comment->id }}">Edit</button>
-                <button class="btn btn-link btn-sm  text-danger">delete</button>
+                <button class="btn btn-link btn-sm comment-edit-btn" data-comment-edit-id="comment-edit-form-{{ $comment->id }}" >Edit</button>
+                <button class="btn btn-link btn-sm comment-delete-btn text-danger" data-comment-delete-id="{{ $comment->id }}" >Delete</button>
                 @endif
                 @if ($comment->replies->count() == 0)
                     @if (auth()->check())    
@@ -52,10 +52,10 @@
             
             <!-- Update Comment Field -->
             <div class="comment-edit-form mt-2 d-none" id="comment-edit-form-{{ $comment->id }}">
-                <form class="update-comment-form">
+                <form class="update-comment-form mb-2">
                     @csrf
                     <input type="hidden" name="comment_id" value="{{ $comment->id }}">
-                    <textarea class="form-control mb-2 comment-edit-text" rows="2" name="comment">{{ $comment->comment }}</textarea>
+                    <textarea class="form-control mb-2" rows="2" name="comment">{{ $comment->comment }}</textarea>
                     <button type="submit" class="btn btn-secondary btn-sm">Update</button>
                     <button type="button" class="btn btn-light btn-sm cancel-edit">Cancel</button>
                 </form>
@@ -192,6 +192,56 @@
                 },
             });
         });
+
+        // delete comment
+        $('.comment-delete-btn').on('click', function () {
+            const commentDeleteId = $(this).data('comment-delete-id');
+            Swal.fire({
+                title: 'Are you sure?',
+                text: "This will permanently delete the comment and its replies.",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#d33',
+                cancelButtonColor: '#3085d6',
+                confirmButtonText: 'Yes, delete it!'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    // Send AJAX request to delete the comment
+                    $.ajax({
+                        type: "GET",
+                        dataType: "json",
+                        url: '/delete/comment/'+commentDeleteId,
+
+                        success: function(data){
+                            // Start Message 
+                        const Toast = Swal.mixin({
+                                toast: true,
+                                position: 'top-end',
+                                icon: 'success', 
+                                showConfirmButton: false,
+                                timer: 5000 
+                        })
+                        if ($.isEmptyObject(data.error)) {
+                                
+                                Toast.fire({
+                                type: 'success',
+                                title: data.success, 
+                                })
+                        }else{
+                            
+                        Toast.fire({
+                                type: 'error',
+                                title: data.error, 
+                                })
+                            }
+                            location.reload()
+                            // End Message   
+                        }
+                    });
+                }
+            });
+        });
+
 
         // Reply Form
         $('.reply-btn').on('click', function () {

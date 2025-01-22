@@ -71,4 +71,19 @@ class CommentController extends Controller
             return redirect()->back()->with($notification);
         }
     } // end of update
+
+    public function delete($id){
+        DB::beginTransaction();
+        try {
+            $comment = Comment::findOrFail($id);
+            $comment->delete();
+            DB::commit();
+            return response()->json(['success'=>'Status Changed successfully']);
+        } catch (\Exception $e) {
+
+            DB::rollback();
+            $message = $e->getMessage();
+            return response()->json(['error'=> $message]);
+        }
+    } // end delete
 }
