@@ -19,4 +19,5 @@ class HomeController extends Controller
         $post = Post::with(['comments.replies'])->findOrFail($id);
         return view('frontend.post-detail',compact('post'));
     }
+    
 }

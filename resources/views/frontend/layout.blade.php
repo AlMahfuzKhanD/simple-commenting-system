@@ -6,6 +6,8 @@
     <title>Simple Commenting System</title>
     <!-- Bootstrap CSS -->
     @vite(['resources/sass/app.scss','resources/js/app.js'])
+    @include('common.common-css')
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 </head>
 <body>
     <!-- Navigation Bar -->
@@ -17,5 +19,6 @@
     <!-- Footer -->
     @include('frontend.footer')
     
+    @include('common.common-js')	
 </body>
 </html>

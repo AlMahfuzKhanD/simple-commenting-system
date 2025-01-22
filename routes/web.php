@@ -1,16 +1,14 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\HomeController;
+use App\Http\Controllers\CommentController;
 use App\Http\Controllers\LoginUserController;
 use App\Http\Controllers\Backend\PostController;
 use App\Http\Controllers\RegisterUserController;
 use App\Http\Controllers\Backend\IndexController;
-use App\Http\Controllers\HomeController;
 use App\Http\Controllers\Backend\CategoryController;
 
-//frontend route
-Route::get('/',[HomeController::class,'index']);
-Route::get('/post/detail/{id}',[HomeController::class,'postDetail'])->name('post.detail');
 
 //Register User Rout
 Route::get('/register',[RegisterUserController::class,'index'])->name('register');
@@ -19,6 +17,15 @@ Route::post('/store/user',[RegisterUserController::class,'store'])->name('store.
 Route::get('/login',[LoginUserController::class,'index'])->name('login');
 Route::post('/login',[LoginUserController::class,'login'])->name('auth.login');
 Route::post('/logout',[LoginUserController::class,'logout'])->name('logout');
+
+//frontend route
+Route::get('/',[HomeController::class,'index']);
+Route::get('/post/detail/{id}',[HomeController::class,'postDetail'])->name('post.detail');
+
+// Comment Route
+Route::middleware(['auth'])->group(function () {
+    Route::post('/store/comment',[CommentController::class,'store'])->name('store.comment');
+});
 
 // Dashboard Route
 Route::middleware(['auth'])->group(function () {
