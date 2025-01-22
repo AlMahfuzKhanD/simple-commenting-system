@@ -33,7 +33,7 @@ class PostController extends Controller
                 'category_id' => $request->category_id,
                 'title' => $request->title,
                 'description' => $request->description,
-                'created_by' => Auth::user()->id,
+                'user_id' => Auth::user()->id,
                 'created_at' => Carbon::now()
             ]);
 

@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('replies', function (Blueprint $table) {
             $table->id();
-            $table->unsignedInteger('comment_id');
+            $table->foreignId('comment_id')->constrained()->onDelete('cascade');
             $table->string('reply');
             $table->unsignedInteger('created_by');
             $table->timestamps();

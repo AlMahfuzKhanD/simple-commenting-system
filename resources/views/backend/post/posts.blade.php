@@ -9,7 +9,7 @@
             </div>
             
             <div class="col-auto ms-auto text-end mt-n1">
-                <a href="{{ route('create.category') }}" class="btn btn-primary">Create New Post</a>
+                <a href="{{ route('create.post') }}" class="btn btn-primary">Create New Post</a>
             </div> 
            
             

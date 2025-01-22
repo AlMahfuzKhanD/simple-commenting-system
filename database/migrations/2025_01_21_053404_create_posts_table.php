@@ -14,9 +14,9 @@ return new class extends Migration
         Schema::create('posts', function (Blueprint $table) {
             $table->id();
             $table->foreignId('category_id')->constrained()->onDelete('restrict'); // it will ensure category will not be deleted if there are any posts
+            $table->foreignId('user_id');
             $table->string('title');
             $table->text('description');
-            $table->unsignedInteger('created_by');
             $table->timestamps();
         });
     }
