@@ -30,7 +30,7 @@ class LoginUserController extends Controller
                     'alert-type' => 'Success'
                 );
 
-                return redirect()->intended('dashboard')->with($notification);
+                return redirect()->intended('posts')->with($notification);
             }else{
                 $notification = array(
                     'message' => 'Incorrect Credentials ',

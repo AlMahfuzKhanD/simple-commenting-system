@@ -52,11 +52,11 @@
                                         @csrf
 										<div class="mb-3">
 											<label class="form-label">Name</label>
-											<input class="form-control form-control-lg" type="text" name="name" placeholder="Enter your name" required>
+											<input class="form-control form-control-lg" type="text" name="name" placeholder="Enter your name" required autocomplete="off">
 										</div>
 										<div class="mb-3">
 											<label class="form-label">Email</label>
-											<input class="form-control form-control-lg" type="email" name="email" placeholder="Enter your email" required>
+											<input class="form-control form-control-lg" type="email" name="email" placeholder="Enter your email" required autocomplete="off">
 										</div>
 										<div class="mb-3">
 											<label class="form-label">Password</label>

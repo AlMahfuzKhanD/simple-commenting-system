@@ -40,11 +40,6 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/store/reply',[ReplyController::class,'store'])->name('store.reply');
 });
 
-// Dashboard Route
-Route::middleware(['auth'])->group(function () {
-    Route::get('/dashboard',[IndexController::class,'index'])->name('dashboard');
-});
-
 // Category Route
 Route::middleware(['auth','roles:admin'])->group(function () {
     Route::get('/categories',[CategoryController::class,'index'])->name('categories');

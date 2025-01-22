@@ -21,7 +21,7 @@
                             @csrf
                             <div class="mb-3">
                                 <label class="form-label">Category Name</label>
-                                <input type="text" class="form-control" placeholder="Category Name" name="category_name">
+                                <input type="text" class="form-control" placeholder="Category Name" name="category_name" autocomplete="off">
                             </div>
                             <button type="submit" class="btn btn-primary">Create</button>
                         </form>

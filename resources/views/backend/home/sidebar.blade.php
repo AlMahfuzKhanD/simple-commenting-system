@@ -3,7 +3,7 @@
 @endphp
 <nav id="sidebar" class="sidebar js-sidebar">
     <div class="sidebar-content js-simplebar">
-        <a class="sidebar-brand" href="{{route('dashboard')}}">
+        <a class="sidebar-brand" href="{{route('posts')}}">
             <span class="sidebar-brand-text align-middle">
                 Commenting System
             </span>
@@ -33,11 +33,6 @@
         </div>
 
         <ul class="sidebar-nav">
-            <li class="sidebar-item active">
-                <a class="sidebar-link" href="{{ route('dashboard') }}">
-                    <i class="align-middle" data-feather="sliders"></i> <span class="align-middle">Dashboards</span>
-                </a>
-            </li>
             @if (auth()->check() && auth()->user()->role == 'admin')
             <li class="sidebar-item">
                 <a href="#review" data-bs-toggle="collapse" class="sidebar-link collapsed">
@@ -50,7 +45,7 @@
             </li>
             @endif
             
-            <li class="sidebar-item">
+            <li class="sidebar-item active">
                 <a href="#auth" data-bs-toggle="collapse" class="sidebar-link collapsed">
                     <i class="align-middle" data-feather="align-center"></i> <span class="align-middle">Post</span>
                 </a>
