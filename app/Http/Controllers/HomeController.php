@@ -18,7 +18,7 @@ class HomeController extends Controller
 
             $posts = Post::when($categoryId != 'all', function ($query) use ($categoryId) {
                 return $query->where('category_id', $categoryId);
-            })->with(['category', 'user'])->get();
+            })->with(['category', 'user'])->latest()->get();
 
             return response()->json([
                 'success' => true,
@@ -27,7 +27,7 @@ class HomeController extends Controller
         }
 
         // Show all posts by default
-        $posts = Post::with(['category', 'user'])->paginate(5);
+        $posts = Post::with(['category', 'user'])->latest()->paginate(5);
 
         return view('frontend.home', compact('categories', 'posts'));
     } // end of index

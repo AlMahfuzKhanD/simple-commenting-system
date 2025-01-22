@@ -25,4 +25,15 @@ class Comment extends Model
     public function user(){
         return $this->belongsTo(User::class);
     }
+
+    public static function boot()
+    {
+        parent::boot();
+
+        static::deleting(function ($comment) {
+            // Delete all related replies
+            $comment->replies()->delete();
+        });
+    }
+
 }

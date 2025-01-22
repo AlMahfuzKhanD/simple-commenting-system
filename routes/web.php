@@ -10,6 +10,11 @@ use App\Http\Controllers\Backend\ReplyController;
 use App\Http\Controllers\Backend\CommentController;
 use App\Http\Controllers\Backend\CategoryController;
 
+//clear cached data
+Route::get('/clear-cache', function () {
+    Artisan::call('optimize:clear');
+    return 'Cache, complied, config, events, routes, views Cleared';
+});
 
 //Register User Rout
 Route::get('/register',[RegisterUserController::class,'index'])->name('register');

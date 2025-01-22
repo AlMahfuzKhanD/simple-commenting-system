@@ -5,8 +5,9 @@ namespace App\Http\Controllers\Backend;
 use DB;
 use Carbon\Carbon;
 use App\Models\Comment;
-use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Auth;
 
 class CommentController extends Controller
 {
