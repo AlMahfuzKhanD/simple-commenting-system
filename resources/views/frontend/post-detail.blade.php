@@ -14,6 +14,7 @@
         <h3>Comments</h3>
 
         <!-- Add a Comment -->
+        @if (auth()->check())
         <form id="add-comment">
             @csrf
             <input type="hidden" name="post_id" value="{{ $post->id}}">
@@ -22,6 +23,12 @@
                 <button type="submit"  class="btn btn-primary">Post Comment</button>
             </div>
         </form>
+        @else
+        <div class="mb-4">
+            <strong><p class="text-danger">To add comment, please login first</p></strong>
+        </div>
+        @endif
+        
         
 
         <!-- Comment List -->
@@ -34,9 +41,10 @@
                 <button class="btn btn-link btn-sm comment-edit-btn" data-edited-comment="{{$comment->comment}}" data-comment-edit-id="comment-edit-form-{{ $comment->id }}" data-comment-edit-text="comment-edit-text-{{ $comment->id }}" data-comment-update="update-comment-{{ $comment->id }}">Edit</button>
                 <button class="btn btn-link btn-sm  text-danger">delete</button>
                 @endif
-                @if ($comment->replies->count() == 0)                    
-                {{-- <button class="btn btn-link btn-sm reply-btn" data-comment-id="reply-form-{{ $comment->id }}">Reply</button> --}}
-                <button class="btn btn-link btn-sm reply-btn" data-reply-target="reply-form-comment-{{ $comment->id }}">Reply</button>
+                @if ($comment->replies->count() == 0)
+                    @if (auth()->check())    
+                    <button class="btn btn-link btn-sm reply-btn" data-reply-target="reply-form-comment-{{ $comment->id }}">Reply</button>
+                    @endif                    
                 @endif
                 
             </div>
@@ -63,7 +71,7 @@
                     <button type="button" class="btn btn-light btn-sm cancel-reply">Cancel</button>
                 </form>
             </div>
-           
+           <!-- Replies -->
             @if ($comment->replies->isNotEmpty())
                 <div class="ms-4">
                     @foreach ($comment->replies as $reply)
@@ -73,7 +81,7 @@
                             {{-- <button class="btn btn-link btn-sm">Edit</button>
                             <button class="btn btn-link btn-sm text-danger">Delete</button> --}}
                             @endif
-                            @if ($loop->last)
+                            @if ($loop->last && auth()->check())
                             <button class="btn btn-link btn-sm reply-btn" data-reply-target="reply-form-reply-{{ $reply->id }}">Reply</button>
                             @endif
                         </div>
@@ -187,18 +195,16 @@
 
         // Reply Form
         $('.reply-btn').on('click', function () {
-            // Get the target reply form
+
             const replyFormId = $(this).data('reply-target');
             const replyForm = $('#' + replyFormId);
 
-            // Hide other reply forms
             $('.reply-form').not(replyForm).addClass('d-none');
 
-            // Toggle visibility of the selected reply form
             replyForm.toggleClass('d-none');
         });
 
-         // Cancel reply action
+         // Cancel reply 
         $('.cancel-reply').on('click', function () {
             $(this).closest('.reply-form').addClass('d-none');
         });
