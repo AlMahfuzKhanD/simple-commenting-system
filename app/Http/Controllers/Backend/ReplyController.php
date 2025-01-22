@@ -5,7 +5,6 @@ namespace App\Http\Controllers\Backend;
 use DB;
 use Carbon\Carbon;
 use App\Models\Reply;
-use App\Models\Comment;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;

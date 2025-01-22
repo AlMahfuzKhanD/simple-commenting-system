@@ -3,7 +3,7 @@
         <div class="row text-muted">
             <div class="col-6 text-start">
                 <p class="mb-0">
-                    <a href="index.html" class="text-muted">&copy; <strong>Agri Stock</strong></a> 
+                    <a href="index.html" class="text-muted">&copy; <strong>Simple Commenting System</strong></a> 
                 </p>
             </div>
             <div class="col-6 text-end">

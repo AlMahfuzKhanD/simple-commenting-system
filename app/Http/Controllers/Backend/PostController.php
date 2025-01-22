@@ -12,7 +12,7 @@ use Illuminate\Support\Facades\Auth;
 class PostController extends Controller
 {
     public function index(){
-        $posts = Post::all();
+        $posts = auth()->user()->role == 'admin' ? Post::latest()->get() : Post::where('user_id',auth()->user()->id)->latest()->get();
         return view('backend.post.posts',compact('posts'));
     } // end of index
 

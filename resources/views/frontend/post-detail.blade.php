@@ -34,18 +34,13 @@
                 <button class="btn btn-link btn-sm comment-edit-btn" data-edited-comment="{{$comment->comment}}" data-comment-edit-id="comment-edit-form-{{ $comment->id }}" data-comment-edit-text="comment-edit-text-{{ $comment->id }}" data-comment-update="update-comment-{{ $comment->id }}">Edit</button>
                 <button class="btn btn-link btn-sm  text-danger">delete</button>
                 @endif
-                <button class="btn btn-link btn-sm reply-btn" data-comment-id="reply-form-{{ $comment->id }}">Reply</button>
+                @if ($comment->replies->count() == 0)                    
+                {{-- <button class="btn btn-link btn-sm reply-btn" data-comment-id="reply-form-{{ $comment->id }}">Reply</button> --}}
+                <button class="btn btn-link btn-sm reply-btn" data-reply-target="reply-form-comment-{{ $comment->id }}">Reply</button>
+                @endif
                 
             </div>
-            {{-- <!-- Update Comment Field -->
-            <form id="update-comment-{{ $comment->id }}">
-                @csrf
-                <input type="hidden" name="comment_id" value="{{ $comment->id}}">
-                <div class="comment-edit-form mt-2 d-none" id="comment-edit-form-{{ $comment->id }}">                            
-                <textarea class="form-control mb-2" rows="2" id="comment-edit-text-{{ $comment->id }}" name="update_comment"></textarea>
-                <button class="btn btn-secondary btn-sm">Update</button>
-                </div>
-            </form> --}}
+
             
             <!-- Update Comment Field -->
             <div class="comment-edit-form mt-2 d-none" id="comment-edit-form-{{ $comment->id }}">
@@ -58,32 +53,8 @@
                 </form>
             </div>
 
-            <!-- Replies -->
-            @if ($comment->replies->isNotEmpty())
-                <div class="ms-4">
-                    @foreach ($comment->replies as $reply)
-                        <div class="mb-2">
-                            <strong>{{ $reply->user->name }}:</strong> {{ $reply->reply }}
-                            @if (auth()->check() && auth()->id() == $reply->user_id)
-                            <button class="btn btn-link btn-sm">Edit</button>
-                            <button class="btn btn-link btn-sm  text-danger">delete</button>
-                            @endif
-                            <button class="btn btn-link btn-sm reply-btn" data-comment-id="reply-form-{{ $reply->id }}">Reply</button>
-                        </div>
-                        <div class="reply-form mt-2 d-none" id="reply-form-{{ $reply->id }}">
-                            <form class="add-reply-form">
-                                @csrf
-                                <input type="hidden" name="comment_id" value="{{ $comment->id }}">
-                                <textarea class="form-control mb-2" rows="2" placeholder="Write your reply..." name="reply"></textarea>
-                                <button type="submit" class="btn btn-secondary btn-sm">Reply</button>
-                                <button type="button" class="btn btn-light btn-sm cancel-reply">Cancel</button>
-                            </form>
-                        </div>
-                    @endforeach
-                    
-                </div>
-            @else
-            <div class="ms-4 reply-form mt-2 d-none" id="reply-form-{{ $comment->id }}">
+            <!-- Comment Reply Form -->
+            <div class="reply-form mt-2 d-none" id="reply-form-comment-{{ $comment->id }}">
                 <form class="add-reply-form">
                     @csrf
                     <input type="hidden" name="comment_id" value="{{ $comment->id }}">
@@ -92,6 +63,33 @@
                     <button type="button" class="btn btn-light btn-sm cancel-reply">Cancel</button>
                 </form>
             </div>
+           
+            @if ($comment->replies->isNotEmpty())
+                <div class="ms-4">
+                    @foreach ($comment->replies as $reply)
+                        <div class="mb-2">
+                            <strong>{{ $reply->user->name }}:</strong> {{ $reply->reply }}
+                            @if (auth()->check() && auth()->id() == $reply->user_id)
+                            {{-- <button class="btn btn-link btn-sm">Edit</button>
+                            <button class="btn btn-link btn-sm text-danger">Delete</button> --}}
+                            @endif
+                            @if ($loop->last)
+                            <button class="btn btn-link btn-sm reply-btn" data-reply-target="reply-form-reply-{{ $reply->id }}">Reply</button>
+                            @endif
+                        </div>
+
+                        <!-- Reply Reply Form -->
+                        <div class="reply-form mt-2 d-none" id="reply-form-reply-{{ $reply->id }}">
+                            <form class="add-reply-form">
+                                @csrf
+                                <input type="hidden" name="comment_id" value="{{ $comment->id }}">
+                                <textarea class="form-control mb-2" rows="2" placeholder="Write your reply..." name="reply"></textarea>
+                                <button type="submit" class="btn btn-secondary btn-sm">Reply</button>
+                                <button type="button" class="btn btn-light btn-sm cancel-reply">Cancel</button>
+                            </form>
+                        </div>
+                    @endforeach                    
+                </div>
             @endif            
         </div>
         @endforeach
@@ -189,13 +187,18 @@
 
         // Reply Form
         $('.reply-btn').on('click', function () {
-            // Get the ID of the associated reply form
-            const commentId = $(this).data('comment-id');
-            $('#' + commentId).removeClass('d-none');
+            // Get the target reply form
+            const replyFormId = $(this).data('reply-target');
+            const replyForm = $('#' + replyFormId);
 
+            // Hide other reply forms
+            $('.reply-form').not(replyForm).addClass('d-none');
+
+            // Toggle visibility of the selected reply form
+            replyForm.toggleClass('d-none');
         });
 
-        // Cancel reply
+         // Cancel reply action
         $('.cancel-reply').on('click', function () {
             $(this).closest('.reply-form').addClass('d-none');
         });

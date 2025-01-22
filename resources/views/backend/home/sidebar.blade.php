@@ -38,6 +38,7 @@
                     <i class="align-middle" data-feather="sliders"></i> <span class="align-middle">Dashboards</span>
                 </a>
             </li>
+            @if (auth()->check() && auth()->user()->role == 'admin')
             <li class="sidebar-item">
                 <a href="#review" data-bs-toggle="collapse" class="sidebar-link collapsed">
                     <i class="align-middle" data-feather="grid"></i> <span class="align-middle">Categories</span>
@@ -47,6 +48,8 @@
                     <li class="sidebar-item"><a class="sidebar-link" href="{{route('create.category')}}">Create Category</a></li>
                 </ul>
             </li>
+            @endif
+            
             <li class="sidebar-item">
                 <a href="#auth" data-bs-toggle="collapse" class="sidebar-link collapsed">
                     <i class="align-middle" data-feather="align-center"></i> <span class="align-middle">Post</span>
@@ -54,15 +57,6 @@
                 <ul id="auth" class="sidebar-dropdown list-unstyled collapse " data-bs-parent="#sidebar">
                     <li class="sidebar-item"><a class="sidebar-link" href="{{ route('posts')}}">All Post</a></li>
                     <li class="sidebar-item"><a class="sidebar-link" href="{{ route('create.post')}}">Create Post</a></li>  
-                </ul>
-            </li>
-            <li class="sidebar-item">
-                <a href="#auth" data-bs-toggle="collapse" class="sidebar-link collapsed">
-                    <i class="align-middle" data-feather="users"></i> <span class="align-middle">Auth</span>
-                </a>
-                <ul id="auth" class="sidebar-dropdown list-unstyled collapse " data-bs-parent="#sidebar">
-                    <li class="sidebar-item"><a class="sidebar-link" href="#">All User</a></li>
-                    <li class="sidebar-item"><a class="sidebar-link" href="#">Create User</a></li>  
                 </ul>
             </li>
 

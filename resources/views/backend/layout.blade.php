@@ -14,7 +14,7 @@
 
 	<link rel="canonical" href="index.htm">
 
-	<title>Agri Stock</title>
+	<title>Simple Commenting System</title>
 
 	<link href="{{asset('asset/backend/css2.css?family=Inter:wght@300;400;600&display=swap')}}" rel="stylesheet">
 
