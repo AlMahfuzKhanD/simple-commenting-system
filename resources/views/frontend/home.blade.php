@@ -9,10 +9,6 @@
                 @include('frontend.post-list', ['posts' => $posts]) {{-- Default post list --}}
             </div>
 
-            <!-- Pagination Links -->
-            <div class="d-flex justify-content-center mt-4" id="paginationContainer">
-                {{ $posts->links() }}
-            </div>
         </div>
         
         <div class="col-md-4">
@@ -55,7 +51,6 @@
                 success: function (response) {
                     if (response.success) {
                         $('#postContainer').html(response.html); // Update post list.
-                        $('#paginationContainer').hide(); // Hide pagination for filtered results.
                     } else {
                         alert('Failed to load posts.');
                     }

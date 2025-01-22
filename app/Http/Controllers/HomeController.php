@@ -27,7 +27,7 @@ class HomeController extends Controller
         }
 
         // Show all posts by default
-        $posts = Post::with(['category', 'user'])->latest()->paginate(5);
+        $posts = Post::with(['category', 'user'])->latest()->get();
 
         return view('frontend.home', compact('categories', 'posts'));
     } // end of index
