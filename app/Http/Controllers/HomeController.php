@@ -16,6 +16,7 @@ class HomeController extends Controller
     } // end of index
 
     public function postDetail($id){
-        dd($id);
+        $post = Post::with(['comments.replies'])->findOrFail($id);
+        return view('frontend.post-detail',compact('post'));
     }
 }

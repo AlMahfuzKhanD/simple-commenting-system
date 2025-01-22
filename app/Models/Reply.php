@@ -12,4 +12,13 @@ class Reply extends Model
         'created_by',
     ];
 
+    public function comment()
+    {
+        return $this->belongsTo(Comment::class);
+    }
+
+    public function user(){
+        return $this->belongsTo(User::class);
+    }
+
 }
