@@ -20,7 +20,7 @@ Route::post('/login',[LoginUserController::class,'login'])->name('auth.login');
 Route::post('/logout',[LoginUserController::class,'logout'])->name('logout');
 
 //frontend route
-Route::get('/',[HomeController::class,'index']);
+Route::get('/',[HomeController::class,'index'])->name('home');
 Route::get('/post/detail/{id}',[HomeController::class,'postDetail'])->name('post.detail');
 
 // Comment Route
